@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Testing file upload</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <style>
+        .divider-text {
+            position: relative;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .divider-text span {
+            padding: 7px;
+            font-size: 12px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider-text:after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            top: 55%;
+            left: 0;
+            z-index: 1;
+        }
+
+        .btn-facebook {
+            background-color: #405D9D;
+            color: #fff;
+        }
+
+        .btn-twitter {
+            background-color: #42AEEC;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+
+
+<div class="container">
+
+    <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+            <h4 class="card-title mt-3 text-center">Create Account</h4>
+            <p class="text-center">Get started with your free account</p>
+            <p>
+                <a href="" class="btn btn-block btn-twitter"> <i class="fab fa-twitter"></i>   Login via Twitter</a>
+                <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via
+                    facebook</a>
+            </p>
+            <p class="divider-text">
+                <span class="bg-light">OR</span>
+            </p>
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                </div>
+                <input id="fullName" class="form-control" placeholder="Full name" type="text">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                </div>
+                <span id="errorvalidate" style="color: red"></span>
+                <input id="email" class="form-control" placeholder="Email address" type="email">
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-phone"></i> </span>
+                </div>
+                <select class="custom-select" style="max-width: 120px;">
+                    <option selected="">+971</option>
+                    <option value="1">+972</option>
+                    <option value="2">+198</option>
+                    <option value="3">+701</option>
+                </select>
+                <input id="phoneNumber" class="form-control" placeholder="Phone number" type="text">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input id="passWord" class="form-control" placeholder="Create password" type="password">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                <input id="rePassWord" class="form-control" placeholder="Repeat password" type="password">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fas fa-info"></i> </span>
+                </div>
+                <input id="dateOfBirth" class="form-control" placeholder="Date Of Birth" type="Date">
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fas fa-info"></i></span>
+                </div>
+                <input id="address" class="form-control" placeholder="Address" type="text">
+            </div>
+
+            <div class="form-group">
+                <button onclick="createAccount()" class="btn btn-primary btn-block"> Create Account</button>
+            </div> <!-- form-group// -->
+            <p class="text-center">Have an account? <a href="../index.html">Log In</a></p>
+
+        </article>
+    </div> <!-- card.// -->
+
+</div>
+<!--container end.//-->
+<script>
+    function createAccount() {
+        let fullName = $('#fullName').val();
+        let password = $('#passWord').val();
+        let repassword = $('#rePassWord').val();
+        let email = $('#email').val();
+        let phoneNumber = $('#phoneNumber').val();
+        let address = $('#address').val();
+        let dateOfBirth = $('#dateOfBirth').val();
+        if (fullName == "" || password == "" || repassword == "" || email == "") {
+            alert("Email and Password is Not blank! or Repassword and password is not same!")
+            return
+        }
+        let account = {
+            email: email, password: password, re_password: repassword, phoneNumber: phoneNumber,
+            fullName: fullName, dateOfBirth: dateOfBirth, address: address
+        };
+        $.ajax({
+            url: 'https://vilo-vn.herokuapp.com/account/signup',
+            method: 'POST',
+            data: JSON.stringify(account),
+            contentType: 'application/json; charset=utf8',
+            //xử lý khi thành công
+            success: function (data) {
+                alert(data)
+            },
+            error: function (err) {
+                document.getElementById('email').value = 'Email is format fail!';
+            }
+        });
+
+    }
+</script>
+
+</body>
+</html>
